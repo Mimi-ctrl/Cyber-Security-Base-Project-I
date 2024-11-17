@@ -10,18 +10,40 @@
 ## List of the used flaws
 
 1. A05:2021-Security Misconfiguration
+
+https://owasp.org/Top10/A05_2021-Security_Misconfiguration/
+
+description of flaw 1...
+
+how to fix it...
+
 2. A07:2021-Identification and Authentication Failures
+
+https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/
+
+description of flaw 1...
+
+how to fix it...
+
 3. A09:2021-Security Logging and Monitoring Failures
+
+https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/
+
+description of flaw 1...
+
+how to fix it...
+
 4. A03:2021-Injection
-5. A06:2021-Vulnerable and Outdated Components
 
-#### [More information of the flaws](https://owasp.org/www-project-top-ten/)
+https://owasp.org/Top10/A03_2021-Injection/
 
-Link to the document here
+description of flaw 1...
 
-FLAW 1
+how to fix it...
 
-exact source link pinpointing flaw 1...
+5. A04:2021-Insecure Design
+
+https://owasp.org/Top10/A04_2021-Insecure_Design/
 
 description of flaw 1...
 
