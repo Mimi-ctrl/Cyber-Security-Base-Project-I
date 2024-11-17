@@ -2,7 +2,10 @@
 
 ## Installation
 
-Placeholder
+1. Follow [these instructions](https://cybersecuritybase.mooc.fi/installation-guide) to install the necessary dependencies.
+2. Clone the repository.
+3. Run `python3 manage.py runserver`. This will start the server.
+4. Open a browser and go to `localhost:8000` to access the website.
 
 ## List of the used flaws
 
