@@ -25,9 +25,9 @@ Fix: This can be fixed by handling errors correctly. In the code, replacing **em
 
 https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/
 
-description of flaw ...
+Authentication failures may occur if the application allows weak passwords (Password1 etc.) or displays the session ID in the URL.
 
-how to fix it...
+Fix: When creating a user, check the password to see if it meets the criteria for a good password. Do not use the session ID in the URL. Fixes commented in the code.
 
 #### 3. A09:2021-Security Logging and Monitoring Failures
 

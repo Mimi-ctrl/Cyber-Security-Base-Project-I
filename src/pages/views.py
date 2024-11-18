@@ -18,11 +18,26 @@ def create_new_user_view(request):
     if method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
+            #Fix for stronger password --->
+            # password = form.cleaned_data.get('password1')
+            # if len(password) < 8:
+            #     form.add_error('password1', "Password must be at least 8 characters long.")
+            #     return render(request, 'newuser.html', {'form': form})
+            # if sum(char.isdigit() for char in password) < 3:            
+            #     form.add_error('password1', "Password must contain at least 3 number.")
+            #     return render(request, 'newuser.html', {'form': form})
             form.save()
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             login(request, authenticate(username=username, password=password))
-            return redirect('/')
+            # Remove from here to the return so the session ID is not added ---->
+            session_id = request.session.session_key
+            if not session_id:
+                request.session.create()
+                session_id = request.session.session_key
+            return redirect(f'/?sessionid={session_id}')
+            #Use this for fix --->
+            # return redirect('/')
     else:
         form = RegisterForm()
     return render(request, 'newuser.html', {'form': form})
@@ -43,7 +58,7 @@ def delete_note_view(request, noteid):
     return redirect('/')
 
 def empty_page_view(request):
-    #Replacing the following with the commented code will not reveal any details about the error to the user:    
+    #Replacing the following with the commented code will not reveal any details about the error to the user ----->    
     try:
         # Intentional error: division by zero causes an error
         result = 1 / 0
@@ -52,7 +67,7 @@ def empty_page_view(request):
         error_message = f"Error: {str(e)}<br>Stack trace: <pre>{traceback.format_exc()}</pre>"
         return(HttpResponse(error_message))
 
-    #The correct way to handle the error: 
+    #The correct way to handle the error ---> 
     # logger = logging.getLogger(__name__)   
     # try:
     #     result = 1 / 0
