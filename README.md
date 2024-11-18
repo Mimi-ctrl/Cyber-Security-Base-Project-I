@@ -8,6 +8,7 @@
 4. Open a browser and go to `localhost:8000` to access the website.
 
 ## List of the used flaws
+! There is a fix for all of these in the code !
 
 #### 1. A05:2021-Security Misconfiguration
 
@@ -27,7 +28,7 @@ https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/
 
 Authentication failures may occur if the application allows weak passwords (Password1 etc.) or displays the session ID in the URL.
 
-Fix: When creating a user, check the password to see if it meets the criteria for a good password. Do not use the session ID in the URL. Fixes commented in the code.
+Fix: When creating a user, check the password to see if it meets the criteria for a good password. Do not use the session ID in the URL.
 
 #### 3. A09:2021-Security Logging and Monitoring Failures
 
