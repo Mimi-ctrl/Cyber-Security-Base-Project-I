@@ -33,9 +33,9 @@ Fix: When creating a user, check the password to see if it meets the criteria fo
 
 https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/
 
-description of flaw ...
+By saving log data only to a local file.
 
-how to fix it...
+Remove the LOGGING definition from **settings.py**. This will prevent log data from being saved only to a local file.
 
 #### 4. A03:2021-Injection
 
