@@ -35,15 +35,15 @@ https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/
 
 By saving log data only to a local file.
 
-Remove the LOGGING definition from **settings.py**. This will prevent log data from being saved only to a local file.
+Fix: Remove the LOGGING definition from **settings.py**. This will prevent log data from being saved only to a local file.
 
 #### 4. A03:2021-Injection
 
 https://owasp.org/Top10/A03_2021-Injection/
 
-description of flaw ...
+Raw SQL query was used without parameterization, which exposes to SQL injection.
 
-how to fix it...
+Fix: Use parameterized queries or Django ORM, which prevents SQL injection and improves code security.
 
 #### 5. A04:2021-Insecure Design
 

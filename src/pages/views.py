@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.db import connection
 from django.http import HttpResponse
 from .models import Note
 from .forms import RegisterForm
@@ -52,9 +53,14 @@ def add_note_view(request):
 @login_required
 def delete_note_view(request, noteid):
     user = request.user
-    note = Note.objects.get(pk=noteid)
-    if user == note.creator:
-        note.delete()
+    #Remove this to fix and use commented code --->
+    query = "DELETE FROM pages_note WHERE id = %s AND creator_id = %s" % (noteid, user.id)
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+    #Fix ---->
+    # note = Note.objects.get(pk=noteid)
+    # if user == note.creator:
+    #     note.delete()
     return redirect('/')
 
 def empty_page_view(request):
