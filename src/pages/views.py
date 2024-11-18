@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from .models import Note
 from .forms import RegisterForm
+import traceback
+import logging
 
 @login_required
 def home_page_view(request):
@@ -38,3 +41,22 @@ def delete_note_view(request, noteid):
     if user == note.creator:
         note.delete()
     return redirect('/')
+
+def empty_page_view(request):
+    #Replacing the following with the commented code will not reveal any details about the error to the user:    
+    try:
+        # Intentional error: division by zero causes an error
+        result = 1 / 0
+    except Exception as e:
+        # Return an error message that includes a stack trace and detailed errors        
+        error_message = f"Error: {str(e)}<br>Stack trace: <pre>{traceback.format_exc()}</pre>"
+        return(HttpResponse(error_message))
+
+    #The correct way to handle the error: 
+    # logger = logging.getLogger(__name__)   
+    # try:
+    #     result = 1 / 0
+    # except Exception as e:
+    #     logger.error("An error occurred in view_with_error_handling", exc_info=True)
+    #     return HttpResponse("Something went wrong. Please try again later.", status=500)
+    # return HttpResponse(f"Result: {result}")

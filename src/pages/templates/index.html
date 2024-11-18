@@ -119,6 +119,10 @@
             {% csrf_token %}
             <input type="submit" value="Log out"/>
         </form>
+        <form action='emptyPage/' method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Help"/>
+        </form>
     </div>
 </body>
 </html>
