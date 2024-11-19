@@ -3,16 +3,16 @@
 ## Installation
 
 1. Follow [these instructions](https://cybersecuritybase.mooc.fi/installation-guide) to install the necessary dependencies.
-2. Clone the repository.
-3. Run `python3 manage.py runserver`. This will start the server.
-4. Open a browser and go to `localhost:8000` to access the website.
+2. Clone the repository: Use the `git clone` command to create a local copy of the repository on your machine.
+3. Run the server: Execute the command `python3 manage.py runserver`. This will start the Django development server on your local machine.
+4. Access the application: Open a web browser and navigate to `http://localhost:8000`. This will display the website.
 
 ## List of the used flaws
 ! There is a fix for all of these in the code. Flaws can be found in the files **settings.py** and **views.py** !
 
 #### 1. A05:2021-Security Misconfiguration
 
-https://owasp.org/Top10/A05_2021-Security_Misconfiguration/
+Link to the flaw: https://owasp.org/Top10/A05_2021-Security_Misconfiguration/
 
 Security Misconfiguration refers to scenarios where the application's security settings are improperly configured.
 
@@ -26,7 +26,7 @@ Fix: Handle errors gracefully by logging them securely without leaking details t
 
 #### 2. A07:2021-Identification and Authentication Failures
 
-https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/
+Link to the flaw: https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/
 
 Identification and Authentication Failures addresses vulnerabilities in the identification or authentication mechanisms of an application.
 
@@ -36,7 +36,7 @@ Fix: When creating a user, check the password to see if it meets the criteria fo
 
 #### 3. A09:2021-Security Logging and Monitoring Failures
 
-https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/
+Link to the flaw: https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/
 
 Security Logging and Monitoring Failures highlights insufficient logging and monitoring practices.
 
@@ -46,7 +46,7 @@ Fix: Avoid saving logs exclusively to local files by removing or modifying the L
 
 #### 4. A03:2021-Injection
 
-https://owasp.org/Top10/A03_2021-Injection/
+Link to the flaw: https://owasp.org/Top10/A03_2021-Injection/
 
 Injection encompasses vulnerabilities where untrusted input is executed as part of command or query, such as SQL injection.
 
@@ -56,7 +56,7 @@ Fix: Use parameterized queries or Django ORM, which prevents SQL injection and i
 
 #### 5. A04:2021-Insecure Design
 
-https://owasp.org/Top10/A04_2021-Insecure_Design/
+Link to the flaw: https://owasp.org/Top10/A04_2021-Insecure_Design/
 
 Insecure Design focuses on design flaws that lead to security vulnerabilities.
 
