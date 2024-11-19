@@ -4,7 +4,7 @@
 
 1. Follow [these instructions](https://cybersecuritybase.mooc.fi/installation-guide) to install the necessary dependencies.
 2. Clone the repository: Use the `git clone` command to create a local copy of the repository on your machine.
-3. Run the server: Execute the command `python3 manage.py runserver`. This will start the Django development server on your local machine.
+3. Run migrations and server: First, execute following commands to apply any pending database migrations: `python3 manage.py makemigrations` `python3 manage.py migrate`. After that, start the Django development server by running: `python3 manage.py runserver`. This will start the Django development server on your local machine.
 4. Access the application: Open a web browser and navigate to `http://localhost:8000`. This will display the website.
 
 ## List of the used flaws in project
