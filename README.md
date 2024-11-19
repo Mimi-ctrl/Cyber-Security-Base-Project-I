@@ -8,41 +8,49 @@
 4. Open a browser and go to `localhost:8000` to access the website.
 
 ## List of the used flaws
-! There is a fix for all of these in the code !
+! There is a fix for all of these in the code. Flaws can be found in the files **settings.py** and **views.py** !
 
 #### 1. A05:2021-Security Misconfiguration
 
 https://owasp.org/Top10/A05_2021-Security_Misconfiguration/
 
-In Django, you can configure that error messages are not exposed to users in production. This is done using a configuration file(settings.py).
+Security Misconfiguration refers to scenarios where the application's security settings are improperly configured.
 
-Fix: Set the DEBUG variable to False in production. This prevents stack traces from being displayed and prevents the details of errors from being exposed.
+In Django, error messages might unintentionally be exposed to users in the production environment if error handling is misconfigured in the **settings.py** file. This can reveal critical details such as file paths, or sensitive system information.
 
-Incorrect error handling can reveal too much information to the user, such as SQL requests, file paths, or other confidential information.
+Fix: Set the DEBUG variable to False in the production environment. This ensures that detailed error messages are not displayed to end users
 
-Fix: This can be fixed by handling errors correctly. In the code, replacing **empty_page_view** in the **views.py** file with the commented code in the try exception section will not reveal the error to the user.
+Incorrect error handling can expose application internals, such as SQL queries or API keys. 
+
+Fix: Handle errors gracefully by logging them securely without leaking details to users.
 
 #### 2. A07:2021-Identification and Authentication Failures
 
 https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/
 
-Authentication failures may occur if the application allows weak passwords (Password1 etc.) or displays the session ID in the URL.
+Identification and Authentication Failures addresses vulnerabilities in the identification or authentication mechanisms of an application.
 
-Fix: When creating a user, check the password to see if it meets the criteria for a good password. Do not use the session ID in the URL.
+Allowing weak passwords, such as **Password1** compromises user security. Including the session ID in the URL can expose it to attackers via browser history or URL sharing.
+
+Fix: When creating a user, check the password to see if it meets the criteria for a good password. Avoid including sensitive information, such as session IDs, in URLs.
 
 #### 3. A09:2021-Security Logging and Monitoring Failures
 
 https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/
 
-By saving log data only to a local file.
+Security Logging and Monitoring Failures highlights insufficient logging and monitoring practices.
 
-Fix: Remove the LOGGING definition from **settings.py**. This will prevent log data from being saved only to a local file.
+Saving log data only to a local file makes it harder to monitor events effectively. Additionally, sensitive logs could be lost or inaccessible in case of a server failure.
+
+Fix: Avoid saving logs exclusively to local files by removing or modifying the LOGGING configuration in **settings.py**.
 
 #### 4. A03:2021-Injection
 
 https://owasp.org/Top10/A03_2021-Injection/
 
-Raw SQL query was used without parameterization, which exposes to SQL injection.
+Injection encompasses vulnerabilities where untrusted input is executed as part of command or query, such as SQL injection.
+
+Using raw SQL queries without parameterization in Django exposes application to SQL injection attacks, where attacker can manipulate query to gain unauthorized access to the database.
 
 Fix: Use parameterized queries or Django ORM, which prevents SQL injection and improves code security.
 
@@ -50,6 +58,8 @@ Fix: Use parameterized queries or Django ORM, which prevents SQL injection and i
 
 https://owasp.org/Top10/A04_2021-Insecure_Design/
 
-description of flaw ...
+Insecure Design focuses on design flaws that lead to security vulnerabilities.
 
-how to fix it...
+Allowing users to create unlimited number of resources, such as files or database entries, can lead to resource exhaustion and denial of service.
+
+Fix: Implement resource limits per user or service to prevent abuse. For example set maximum number of notes per user.
