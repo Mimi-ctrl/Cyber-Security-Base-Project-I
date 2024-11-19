@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = 'django-insecure-&lkt&qep87!tj7o_=^bot$kt_)nm&2w-823a(tx3*elwkbf^&u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Change this to false to fix ----->
+# Change this to false to fix 1st flaw ----->
 DEBUG = True
 
 ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
@@ -106,7 +106,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Remove the code after this to fix ----->
+# Remove the code after this to fix 3rd flaw ----->
 LOG_FILE = os.path.join(BASE_DIR, 'logs', 'app.log')
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 

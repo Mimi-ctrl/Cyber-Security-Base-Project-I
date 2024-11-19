@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.db import connection
 from django.http import HttpResponse
 from .models import Note
@@ -19,7 +20,7 @@ def create_new_user_view(request):
     if method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            #Fix for stronger password --->
+            #Fix for 2nd flaw --->
             # password = form.cleaned_data.get('password1')
             # if len(password) < 8:
             #     form.add_error('password1', "Password must be at least 8 characters long.")
@@ -31,18 +32,19 @@ def create_new_user_view(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             login(request, authenticate(username=username, password=password))
-            # Remove from here to the return so the session ID is not added ---->
+            # Remove from here to the return to fix 2nd flaw ---->
             session_id = request.session.session_key
             if not session_id:
                 request.session.create()
                 session_id = request.session.session_key
             return redirect(f'/?sessionid={session_id}')
-            #Use this for fix --->
+            #Fix for 2nd flaw --->
             # return redirect('/')
     else:
         form = RegisterForm()
     return render(request, 'newuser.html', {'form': form})
 
+#Remove this and use commented code to fix 5th flaw --->
 @login_required
 def add_note_view(request):
     user = request.user
@@ -50,30 +52,41 @@ def add_note_view(request):
     Note.objects.create(creator=user, content=note)
     return redirect('/')
 
+#Fix for add_note_view. Fix 5th flaw
+# MAX_NOTES = 5
+# @login_required
+# def add_note_view(request):
+#     user = request.user
+#     total_user_notes = Note.objects.filter(creator=user).count()
+#     if total_user_notes >= MAX_NOTES:
+#         messages.error(request, "You have reached your limit of notes.")
+#         return redirect('/')
+#     note = request.POST.get('content', '').strip()
+#     Note.objects.create(creator=user, content=note)
+#     return redirect('/')
+
 @login_required
 def delete_note_view(request, noteid):
     user = request.user
-    #Remove this to fix and use commented code --->
+    #Remove this to fix 4th flaw and use commented code --->
     query = "DELETE FROM pages_note WHERE id = %s AND creator_id = %s" % (noteid, user.id)
     with connection.cursor() as cursor:
         cursor.execute(query)
-    #Fix ---->
+    #Fix for 4th flaw ---->
     # note = Note.objects.get(pk=noteid)
     # if user == note.creator:
     #     note.delete()
     return redirect('/')
 
 def empty_page_view(request):
-    #Replacing the following with the commented code will not reveal any details about the error to the user ----->    
+    #Replacing the following with the commented code fix 1st flaw ----->    
     try:
-        # Intentional error: division by zero causes an error
         result = 1 / 0
     except Exception as e:
-        # Return an error message that includes a stack trace and detailed errors        
         error_message = f"Error: {str(e)}<br>Stack trace: <pre>{traceback.format_exc()}</pre>"
         return(HttpResponse(error_message))
 
-    #The correct way to handle the error ---> 
+    #Fix for 1st flaw ---> 
     # logger = logging.getLogger(__name__)   
     # try:
     #     result = 1 / 0
