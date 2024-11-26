@@ -47,7 +47,7 @@ def create_new_user_view(request):
         form = RegisterForm()
     return render(request, 'newuser.html', {'form': form})
 
-#Remove first line to fix 5th flaw --->
+#Remove this to fix 5th flaw --->
 @csrf_exempt
 #Add this to fix 5th flaw --->
 #@csrf_protect
