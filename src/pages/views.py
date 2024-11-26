@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.contrib import messages
 from django.db import connection
 from django.http import HttpResponse
@@ -15,6 +16,8 @@ def home_page_view(request):
     user_notes = Note.objects.filter(creator=user)
     return render(request, 'index.html', {"notes": user_notes})
 
+#Add this to fix 5th flaw --->
+#@csrf_protect
 def create_new_user_view(request):
     method = request.method
     if method == 'POST':
@@ -44,7 +47,10 @@ def create_new_user_view(request):
         form = RegisterForm()
     return render(request, 'newuser.html', {'form': form})
 
-#Remove this and use commented code to fix 5th flaw --->
+#Remove first line to fix 5th flaw --->
+@csrf_exempt
+#Add this to fix 5th flaw --->
+#@csrf_protect
 @login_required
 def add_note_view(request):
     user = request.user
@@ -52,27 +58,16 @@ def add_note_view(request):
     Note.objects.create(creator=user, content=note)
     return redirect('/')
 
-#Fix for add_note_view. Fix 5th flaw
-# MAX_NOTES = 5
-# @login_required
-# def add_note_view(request):
-#     user = request.user
-#     total_user_notes = Note.objects.filter(creator=user).count()
-#     if total_user_notes >= MAX_NOTES:
-#         messages.error(request, "You have reached your limit of notes.")
-#         return redirect('/')
-#     note = request.POST.get('content', '').strip()
-#     Note.objects.create(creator=user, content=note)
-#     return redirect('/')
-
+#Add this to code to fix 5th flaw --->
+#@csrf_protect
 @login_required
 def delete_note_view(request, noteid):
-    user = request.user
     #Remove this to fix 4th flaw and use commented code --->
-    query = "DELETE FROM pages_note WHERE id = %s AND creator_id = %s" % (noteid, user.id)
+    query = "DELETE FROM pages_note WHERE id = %s" % (noteid)
     with connection.cursor() as cursor:
         cursor.execute(query)
     #Fix for 4th flaw ---->
+    # user = request.user
     # note = Note.objects.get(pk=noteid)
     # if user == note.creator:
     #     note.delete()

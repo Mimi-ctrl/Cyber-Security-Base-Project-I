@@ -8,7 +8,7 @@
 4. Access the application: Open a web browser and navigate to `http://localhost:8000`. This will display the website.
 
 ## List of the used flaws in project
-! There is a fix for all of these in the code. Flaws can be found in the files **settings.py** and **views.py**. Descriptions of flaws are written based on the text of the link that directs flaw. !
+! There is a fix for all of these in the code. Flaws can be found in the files **index.html**, **settings.py** and **views.py**. Descriptions of flaws are written based on the text of the link that directs flaw. !
 
 #### 1. A05:2021-Security Misconfiguration
 
@@ -54,12 +54,12 @@ Problem in the code: Using raw SQL queries without parameterization in Django ex
 
 Fix: Use parameterized queries or Django ORM, which prevents SQL injection and improves code security.
 
-#### 5. A04:2021-Insecure Design
+#### 5. Cross Site Request Forgery (CSRF)
 
-Link to the flaw: https://owasp.org/Top10/A04_2021-Insecure_Design/
+Link to the flaw: https://owasp.org/www-community/attacks/csrf
 
-Insecure design refers to flaws in software architecture where necessary security controls are missing. These weaknesses often stem from a failure to assess business risks or define security requirements at the start of a project. A key factor contibuting to insecure design is the lack of sufficient resources for proper planning, including budget for security activities and technical requirements. 
+CSRF happens when an attacker tricks a logged-in user into performing unintended actions on a website without their knowledge. For example, the attacker might make the user unknowingly create, update, or delete data. The server cannot tell whether the request is coming from the user or from an attacker.
 
-Problem in the code: Allowing users to create unlimited number of resources, such as files or database entries, can lead to resource exhaustion and denial of service.
+Problem in the code: One part of the application allows users to create notes. However, it does not check if the request is coming from the user or an attacker. This means someone could trick a logged-in user into creating notes without their permission.
 
-Fix: Implement resource limits per user or service to prevent abuse. For example set maximum number of notes per user. Not in this project but otherwise I think the best solution could be that the user could use more resources for a fee.
+Fix: Solution is to make sure every action that changes data (like creating something) requires secret token, called a CSRF token. This token ensures that request is coming from the user and not from an attacker. Using this method makes it impossible for attackers to send fake requests.
